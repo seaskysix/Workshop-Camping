@@ -1,4 +1,3 @@
-// app/landmark/[id]/page.tsx
 import React from "react";
 import { fetchLandmarkDetail } from "@/actions/actions";
 import FavoriteToggleButton from "@/components/card/FavoriteToggleButton";
@@ -7,23 +6,21 @@ import Description from "@/components/landmark/Description";
 import ImageContainer from "@/components/landmark/ImageContainer";
 import ShareButton from "@/components/landmark/ShareButton";
 import { notFound } from "next/navigation";  // ใช้ notFound แทน redirect
+import { GetServerSidePropsContext } from "next"; // Import GetServerSidePropsContext
 
-interface Landmark {
-  id: string;
-  name: string;
-  image: string;
-  description: string;
-}
+const LandmarkDetail = async ({ params }: GetServerSidePropsContext) => {
+  if (!params || typeof params.id !== 'string') {
+    notFound(); // ถ้าไม่พบข้อมูลให้ใช้ notFound()
+    return;
+  }
 
-const LandmarkDetail = async ({ params }: { params: { id: string } }) => {
   const { id } = params;
 
-  // ดึงข้อมูลใน server
+  // ดึงข้อมูลจาก server โดยตรง
   const landmarkData = await fetchLandmarkDetail({ id });
 
-  // ถ้าข้อมูลไม่พบ ให้ใช้ notFound()
   if (!landmarkData) {
-    notFound();
+    notFound(); // ถ้าไม่พบข้อมูลให้ใช้ notFound()
   }
 
   return (
