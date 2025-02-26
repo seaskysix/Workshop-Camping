@@ -22,7 +22,7 @@ interface LandmarkDetailProps {
 
 const LandmarkDetail = async ({ params }: LandmarkDetailProps) => {
   const { id } = params;
-  const landmark = await fetchLandmarkDetail({ id });
+  const landmark: Landmark = await fetchLandmarkDetail({ id }); // ใช้ประเภท Landmark ที่นี่
 
   if (!landmark) redirect("/");
 
