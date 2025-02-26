@@ -5,21 +5,25 @@ import Description from "@/components/landmark/Description";
 import ImageContainer from "@/components/landmark/ImageContainer";
 import ShareButton from "@/components/landmark/ShareButton";
 import MapLandmark from "@/components/map/MapLandmark";
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation"; // ใช้ notFound แทน redirect
 
 // rafce
 const LandmarkDetail = async ({ params }: { params: { id: string } }) => {
-  const { id } = await params;
+  const { id } = params; // ไม่ต้อง await params
   const landmark = await fetchLandmarkDetail({ id });
-  if (!landmark) redirect("/");
-  
+
+  // หากไม่พบ landmark ให้แสดงหน้าผิดพลาด
+  if (!landmark) {
+    notFound(); // ใช้ notFound เพื่อแสดงหน้าผิดพลาด
+  }
+
   return (
     <section>
       <Breadcrums name={landmark.name} />
       <header className="flex justify-between mt-4 items-center">
-        <h1 className="text-4xl font-bold"> {landmark.name}</h1>
+        <h1 className="text-4xl font-bold">{landmark.name}</h1>
         <div className="flex items-center gap-x-4">
-          <ShareButton landmarkId={landmark.id} name={landmark.name}/>
+          <ShareButton landmarkId={landmark.id} name={landmark.name} />
           <FavoriteToggleButton landmarkId={landmark.id} />
         </div>
       </header>
@@ -29,12 +33,13 @@ const LandmarkDetail = async ({ params }: { params: { id: string } }) => {
       <section>
         <div>
           <Description description={landmark.description} />
-          <MapLandmark 
-          location={{ lat: landmark.lat, lng: landmark.lng }} 
+          <MapLandmark
+            location={{ lat: landmark.lat, lng: landmark.lng }}
           />
         </div>
       </section>
     </section>
   );
 };
+
 export default LandmarkDetail;
