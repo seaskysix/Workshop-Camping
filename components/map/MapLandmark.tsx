@@ -6,7 +6,6 @@ import {
   Marker,
   Popup,
   TileLayer,
-  useMap,
   useMapEvents,
 } from "react-leaflet";
 import L from "leaflet";
@@ -50,7 +49,7 @@ const MapLandmark = ({
   const defaultLocation: Latlng = [13, 100];
 
   const [position, setPosition] = useState<Latlng | null>(null);
-  
+
   return (
     <>
       <h1 className="mt-4 font-semibold">Where are you?</h1>

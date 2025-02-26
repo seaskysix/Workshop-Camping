@@ -37,12 +37,12 @@ const Hero = ({ landmarks }: { landmarks: LandmarkCardProps[] }) => {
                   width={1200} // ✅ กำหนดขนาดภาพเพื่อช่วย optimize
                   height={600}
                   priority // ✅ ช่วยให้โหลดเร็วขึ้น
+                  sizes="(max-width: 768px) 100vw, 1200px" // ✅ คำแนะนำเพื่อให้โหลดภาพได้อย่างมีประสิทธิภาพ
                 />
                 <div className="absolute bottom-0 left-0 z-50">
                   <div
                     className="col-span-4 mb-4 flex h-full flex-1
-                  justify-end px-5 md:mb-4 md:justify-end md:px-10
-                  "
+                  justify-end px-5 md:mb-4 md:justify-end md:px-10"
                   >
                     <OtherInfo landmark={landmark} />
                   </div>
