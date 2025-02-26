@@ -1,6 +1,7 @@
 "use client";
 import { LandmarkCardProps } from "@/utils/types";
 import { Swiper, SwiperSlide } from "swiper/react";
+import Image from "next/image";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -25,14 +26,17 @@ const Hero = ({ landmarks }: { landmarks: LandmarkCardProps[] }) => {
       >
         {landmarks.map((landmark) => {
           return (
-            <SwiperSlide key={landmark.image} className="group">
+            <SwiperSlide key={landmark.id} className="group">
               <div className="relative rounded-md overflow-hidden">
-                <img
+                <Image
                   className="w-full h-[600px] object-cover
                   brightness-75 group-hover:brightness-50 
-                  transition-all duration-300
-                  "
+                  transition-all duration-300"
                   src={landmark.image}
+                  alt={landmark.name} // ✅ เพิ่ม alt text
+                  width={1200} // ✅ กำหนดขนาดภาพเพื่อช่วย optimize
+                  height={600}
+                  priority // ✅ ช่วยให้โหลดเร็วขึ้น
                 />
                 <div className="absolute bottom-0 left-0 z-50">
                   <div
@@ -40,7 +44,7 @@ const Hero = ({ landmarks }: { landmarks: LandmarkCardProps[] }) => {
                   justify-end px-5 md:mb-4 md:justify-end md:px-10
                   "
                   >
-                    <OtherInfo landmark={landmark}/>
+                    <OtherInfo landmark={landmark} />
                   </div>
                 </div>
               </div>

@@ -7,8 +7,8 @@ import ImageInput from "@/components/form/ImageInput";
 import ProvinceInput from "@/components/form/ProvinceInput";
 import TextAreaInput from "@/components/form/TextAreaInput";
 import MapLandmark from "@/components/map/MapLandmark";
-import { currentUser } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
+// import { currentUser } from "@clerk/nextjs/server";
+// import { redirect } from "next/navigation";
 
 const CreateProfile = async () => {
   return (

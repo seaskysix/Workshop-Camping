@@ -12,22 +12,32 @@ const LandmarkContainer = async ({
   search?: string;
   category?: string;
 }) => {
-  const landmarks: LandmarkCardProps[] = await fetchLandmarks({ search,category });
-  const landmarksHero: LandmarkCardProps[] = await fetchLandmarksHero();
+  let landmarks: LandmarkCardProps[] = [];
+  let landmarksHero: LandmarkCardProps[] = [];
 
+  try {
+    landmarks = await fetchLandmarks({ search, category }) || [];
+  } catch (error) {
+    console.error("Error fetching landmarks:", error);
+  }
 
-  
+  try {
+    landmarksHero = await fetchLandmarksHero() || [];
+  } catch (error) {
+    console.error("Error fetching hero landmarks:", error);
+  }
+
   return (
-    <div>
+    <div suppressHydrationWarning>
       <Hero landmarks={landmarksHero} />
-      <CategoriesList search={search} category={category}/>
+      <CategoriesList search={search} category={category} />
       {
         landmarks.length === 0
-        ? <EmptyList heading="No results" btnText="Clear Filters"/>
-        : <LandmarkList landmarks={landmarks} />
+          ? <EmptyList heading="No results" btnText="Clear Filters" />
+          : <LandmarkList landmarks={landmarks} />
       }
-      
     </div>
   );
 };
+
 export default LandmarkContainer;
