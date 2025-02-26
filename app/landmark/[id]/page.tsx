@@ -7,7 +7,7 @@ import ShareButton from "@/components/landmark/ShareButton";
 import MapLandmark from "@/components/map/MapLandmark";
 import { notFound } from "next/navigation";
 
-// กำหนดประเภทให้ตรงกับ Next.js PageProps
+// Define the type of the props correctly
 interface LandmarkPageProps {
   params: {
     id: string;
@@ -15,12 +15,12 @@ interface LandmarkPageProps {
 }
 
 const LandmarkDetail = async ({ params }: LandmarkPageProps) => {
-  const { id } = params; // params เป็น object ที่ไม่มี async/await
+  const { id } = params; // Ensure this matches the structure of the params field
   const landmark = await fetchLandmarkDetail({ id });
 
-  // หากไม่พบ landmark ให้แสดงหน้าผิดพลาด
+  // If no landmark is found, show a 404 page
   if (!landmark) {
-    notFound(); // ใช้ notFound เพื่อแสดงหน้าผิดพลาด
+    notFound(); // Use Next.js's notFound to display a 404 page
   }
 
   return (
