@@ -5,7 +5,7 @@ import Description from "@/components/landmark/Description";
 import ImageContainer from "@/components/landmark/ImageContainer";
 import ShareButton from "@/components/landmark/ShareButton";
 import MapLandmark from "@/components/map/MapLandmark";
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation"; // ใช้ notFound แทน redirect
 
 interface Landmark {
   id: string;
@@ -22,15 +22,16 @@ interface LandmarkDetailProps {
 
 const LandmarkDetail = async ({ params }: LandmarkDetailProps) => {
   const { id } = params;
-  const landmark: Landmark = await fetchLandmarkDetail({ id }); // ใช้ประเภท Landmark ที่นี่
+  const landmark: Landmark | null = await fetchLandmarkDetail({ id });
 
-  if (!landmark) redirect("/");
+  // ตรวจสอบว่ามีแลนด์มาร์คหรือไม่
+  if (!landmark) notFound(); // ใช้ notFound แทน redirect
 
   return (
     <section>
       <Breadcrums name={landmark.name} />
       <header className="flex justify-between mt-4 items-center">
-        <h1 className="text-4xl font-bold"> {landmark.name}</h1>
+        <h1 className="text-4xl font-bold">{landmark.name}</h1>
         <div className="flex items-center gap-x-4">
           <ShareButton landmarkId={landmark.id} name={landmark.name} />
           <FavoriteToggleButton landmarkId={landmark.id} />
