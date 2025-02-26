@@ -6,6 +6,7 @@ import ImageContainer from "@/components/landmark/ImageContainer";
 import ShareButton from "@/components/landmark/ShareButton";
 import MapLandmark from "@/components/map/MapLandmark";
 import { notFound } from "next/navigation"; // ใช้ notFound แทน redirect
+import React from "react"; // นำเข้า React
 
 interface Landmark {
   id: string;
@@ -20,6 +21,7 @@ interface LandmarkDetailProps {
   params: { id: string };
 }
 
+// เปลี่ยนคอมโพเนนต์ให้เป็น async
 const LandmarkDetail = async ({ params }: LandmarkDetailProps) => {
   const { id } = params;
   const landmark: Landmark | null = await fetchLandmarkDetail({ id });
