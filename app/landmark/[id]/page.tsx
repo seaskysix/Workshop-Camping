@@ -5,8 +5,9 @@ import Description from "@/components/landmark/Description";
 import ImageContainer from "@/components/landmark/ImageContainer";
 import ShareButton from "@/components/landmark/ShareButton";
 import MapLandmark from "@/components/map/MapLandmark";
-import { notFound } from "next/navigation"; // ใช้ notFound แทน redirect
+import { notFound } from "next/navigation";
 
+// กำหนดประเภทให้ตรงกับ Next.js PageProps
 interface LandmarkPageProps {
   params: {
     id: string;
@@ -38,8 +39,8 @@ const LandmarkDetail = async ({ params }: LandmarkPageProps) => {
       <section>
         <div>
           <Description description={landmark.description} />
-          <MapLandmark
-            location={{ lat: landmark.lat, lng: landmark.lng }}
+          <MapLandmark 
+            location={{ lat: landmark.lat, lng: landmark.lng }} 
           />
         </div>
       </section>
