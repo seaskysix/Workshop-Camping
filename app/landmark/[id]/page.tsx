@@ -6,9 +6,7 @@ import ImageContainer from "@/components/landmark/ImageContainer";
 import ShareButton from "@/components/landmark/ShareButton";
 import MapLandmark from "@/components/map/MapLandmark";
 import { redirect } from "next/navigation";
-import { GetServerSidePropsContext } from "next"; // นำเข้าประเภทนี้
 
-// กำหนดประเภทสำหรับ landmark
 interface Landmark {
   id: string;
   name: string;
@@ -19,10 +17,13 @@ interface Landmark {
 }
 
 interface LandmarkDetailProps {
-  landmark: Landmark | null; // หรือใช้ undefined แทน null ถ้าต้องการ
+  params: { id: string };
 }
 
-const LandmarkDetail = ({ landmark }: LandmarkDetailProps) => {
+const LandmarkDetail = async ({ params }: LandmarkDetailProps) => {
+  const { id } = params;
+  const landmark = await fetchLandmarkDetail({ id });
+
   if (!landmark) redirect("/");
 
   return (
@@ -49,16 +50,5 @@ const LandmarkDetail = ({ landmark }: LandmarkDetailProps) => {
     </section>
   );
 };
-
-export async function getServerSideProps(context: GetServerSidePropsContext) { // กำหนดประเภทที่นี่
-  const { id } = context.params as { id: string }; // กำหนดประเภทให้กับ params
-  const landmark = await fetchLandmarkDetail({ id });
-
-  return {
-    props: {
-      landmark: landmark || null,
-    },
-  };
-}
 
 export default LandmarkDetail;
