@@ -7,12 +7,9 @@ import ShareButton from "@/components/landmark/ShareButton";
 import MapLandmark from "@/components/map/MapLandmark";
 import { redirect } from "next/navigation";
 
-// rafce
-const LandmarkDetail = async ({ params }: { params: { id: string } }) => {
-  const { id } = params;
-  const landmark = await fetchLandmarkDetail({ id });
+const LandmarkDetail = ({ landmark }) => {
   if (!landmark) redirect("/");
-  // console.log(landmark);
+
   return (
     <section>
       <Breadcrums name={landmark.name} />
@@ -37,4 +34,16 @@ const LandmarkDetail = async ({ params }: { params: { id: string } }) => {
     </section>
   );
 };
+
+export async function getServerSideProps(context) {
+  const { id } = context.params;
+  const landmark = await fetchLandmarkDetail({ id });
+
+  return {
+    props: {
+      landmark: landmark || null,
+    },
+  };
+}
+
 export default LandmarkDetail;
