@@ -7,9 +7,14 @@ import ShareButton from "@/components/landmark/ShareButton";
 import MapLandmark from "@/components/map/MapLandmark";
 import { notFound } from "next/navigation"; // ใช้ notFound แทน redirect
 
-// rafce
-const LandmarkDetail = async ({ params }: { params: { id: string } }) => {
-  const { id } = params; // ไม่ต้อง await params
+interface LandmarkPageProps {
+  params: {
+    id: string;
+  };
+}
+
+const LandmarkDetail = async ({ params }: LandmarkPageProps) => {
+  const { id } = params; // params เป็น object ที่ไม่มี async/await
   const landmark = await fetchLandmarkDetail({ id });
 
   // หากไม่พบ landmark ให้แสดงหน้าผิดพลาด
