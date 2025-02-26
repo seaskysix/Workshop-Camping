@@ -5,7 +5,7 @@ import { Heart, RotateCw } from "lucide-react";
 import { SignInButton } from "@clerk/nextjs";
 
 type btnSize = "default" | "lg" | "sm";
-// const roitai:string = 'tam'
+
 type SubmitButtonProps = {
   className?: string;
   size?: btnSize;
@@ -45,7 +45,7 @@ export const SignInCardButton = () => {
 };
 
 export const CardSubmitButton = ({ isFavorite }: { isFavorite: boolean }) => {
-  // console.log('is',isFavorite)
+  
   const { pending } = useFormStatus()
   return <Button 
   type="submit"

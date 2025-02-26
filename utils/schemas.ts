@@ -1,6 +1,5 @@
 import { z, ZodSchema } from "zod";
 
-// const profileSchema = z.string().min(2,{message:"อักขระต้องมากกว่า 2 อักขระ"})
 
 export const profileSchema = z.object({
   firstName: z.string().min(2, { message: "ชื่อ ต้องมากกว่า 2 อักขระ" }),

@@ -19,7 +19,4 @@ export type CurrentSlideData = {
   data: LandmarkCardProps;
   index: number;
 };
-// export type CurrentSlideData = {
-//   data: LandmarkCardProps;
-//   // index: number;
-// };
+

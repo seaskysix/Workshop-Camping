@@ -12,9 +12,7 @@ const FavoriteToggleForm = ({
   landmarkId: string;
 }) => {
   const pathname = usePathname();
-  // console.log("id", favoriteId);
-  // console.log(pathname);
-
+  
   const toggleAction = toggleFavoriteAction.bind(null, {
     favoriteId,
     landmarkId,
