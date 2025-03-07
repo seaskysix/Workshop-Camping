@@ -5,7 +5,7 @@ const Logo = () => {
   return (
     <Button size="sm" asChild>
       <Link href="/" className="text-2xl">
-        Logo
+        Home
       </Link>
     </Button>
   );

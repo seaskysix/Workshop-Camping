@@ -5,29 +5,49 @@ import Description from "@/components/landmark/Description";
 import ImageContainer from "@/components/landmark/ImageContainer";
 import ShareButton from "@/components/landmark/ShareButton";
 import MapLandmark from "@/components/map/MapLandmark";
-import { notFound } from "next/navigation"; // ใช้ notFound แทน redirect
-import React from "react"; // นำเข้า React
+import { redirect } from "next/navigation";
 
-interface Landmark {
-  id: string;
-  name: string;
-  image: string;
-  description: string;
-  lat: number;
-  lng: number;
-}
+// const LandmarkDetail = async ({
+//   // params,
+//   // searchParams: _searchParams,
 
-interface LandmarkDetailProps {
-  params: { id: string };
-}
+//   params: { id }, // ✅ Destructure `params` ที่นี่
+//   searchParams: _searchParams,
+// }: {
+//   params: { id: string };
+//   searchParams: { [key: string]: string | string[] };
+// }) => {
+//   if (!id) {
+//     redirect("/"); // Redirect ถ้า id ไม่มี
+//     return null; // ป้องกันการทำงานต่อไป
+//   }
 
-// เปลี่ยนคอมโพเนนต์ให้เป็น async
-const LandmarkDetail = async ({ params }: LandmarkDetailProps) => {
-  const { id } = params;
-  const landmark: Landmark | null = await fetchLandmarkDetail({ id });
+//   // const { id } = params;
+//   const landmark = await fetchLandmarkDetail({ id });
+//   // if (!landmark) redirect("/");
 
-  // ตรวจสอบว่ามีแลนด์มาร์คหรือไม่
-  if (!landmark) notFound(); // ใช้ notFound แทน redirect
+//   if (!landmark) redirect("/");
+
+const LandmarkDetail = async ({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ id: string }>; // ✅ กำหนดว่า params เป็น Promise
+  searchParams: { [key: string]: string | string[] };
+}) => {
+  const { id } = await params; // ✅ ใช้ await เพื่อดึงค่า `id` อย่างปลอดภัย
+
+  if (!id) {
+    redirect("/");
+    return null;
+  }
+
+  const landmark = await fetchLandmarkDetail({ id });
+
+  if (!landmark) {
+    redirect("/");
+    return null;
+  }
 
   return (
     <section>
@@ -39,14 +59,12 @@ const LandmarkDetail = async ({ params }: LandmarkDetailProps) => {
           <FavoriteToggleButton landmarkId={landmark.id} />
         </div>
       </header>
-      {/* Image */}
-      <ImageContainer mainImage={landmark.image} name={landmark.name} />
-      {/* Detail */}
+      <ImageContainer mainImage={landmark.image ?? ""} name={landmark.name} />
       <section>
         <div>
           <Description description={landmark.description} />
           <MapLandmark
-            location={{ lat: landmark.lat, lng: landmark.lng }}
+            location={{ lat: landmark.lat ?? 0, lng: landmark.lng ?? 0 }}
           />
         </div>
       </section>
@@ -55,3 +73,4 @@ const LandmarkDetail = async ({ params }: LandmarkDetailProps) => {
 };
 
 export default LandmarkDetail;
+
