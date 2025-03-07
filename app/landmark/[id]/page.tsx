@@ -30,6 +30,7 @@ import { redirect } from "next/navigation";
 
 const LandmarkDetail = async ({
   params,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   searchParams,
 }: {
   params: Promise<{ id: string }>; // ✅ กำหนดว่า params เป็น Promise
